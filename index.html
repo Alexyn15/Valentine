@@ -6,7 +6,6 @@
   <title>🌸 Valentine's Day</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet"/>
   <style>
-    /* ─────────────── DESIGN TOKENS ─────────────── */
     :root {
       --bg:        #fff0f5;
       --bg2:       #fce4ec;
@@ -19,9 +18,7 @@
       --ribbon:    #ec407a;
       --shadow:    rgba(233,30,140,0.18);
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       min-height: 100vh;
       background: linear-gradient(160deg, #fff4f8 0%, #fce4ec 45%, #fde8f0 75%, #fff9fb 100%);
@@ -34,8 +31,6 @@
       justify-content: center;
       position: relative;
     }
-
-    /* ─────────────── FLOATING PETALS ─────────────── */
     .petals-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
     .petal-particle {
       position: absolute;
@@ -51,8 +46,6 @@
       88%  { opacity: 0.4; }
       100% { transform: translateY(-110vh) rotate(540deg) scale(1.1); opacity: 0; }
     }
-
-    /* ─────────────── BOKEH ORBS ─────────────── */
     .bokeh {
       position: fixed; border-radius: 50%;
       pointer-events: none; z-index: 1;
@@ -68,16 +61,12 @@
       from { transform: translate(0,0); }
       to   { transform: translate(44px, 44px); }
     }
-
-    /* ─────────────── MAIN CONTENT ─────────────── */
     .main {
       position: relative; z-index: 10;
       display: flex; flex-direction: column;
       align-items: center; gap: 28px;
       padding: 24px 20px; text-align: center;
     }
-
-    /* TITLE */
     .eyebrow {
       font-family: 'Quicksand', sans-serif; font-weight: 500;
       letter-spacing: 0.45em; font-size: 0.7rem;
@@ -104,8 +93,6 @@
       from { opacity:0; transform:translateY(24px); }
       to   { opacity:1; transform:translateY(0); }
     }
-
-    /* ─────────────── GIFT BOX ─────────────── */
     .box-scene {
       position: relative; width: 172px; height: 198px;
       cursor: pointer;
@@ -118,16 +105,12 @@
       0%,100% { transform: translateY(0); }
       50%      { transform: translateY(-12px); }
     }
-
-    /* BASE */
     .box-base {
       position: absolute; bottom:0; left:0;
       width:172px; height:114px;
       background: linear-gradient(150deg, #fadadd 0%, #f8bbd0 50%, #f48fb1 100%);
       border-radius: 6px 6px 14px 14px;
-      box-shadow:
-        0 18px 44px var(--shadow),
-        inset 0 3px 0 rgba(255,255,255,0.7);
+      box-shadow: 0 18px 44px var(--shadow), inset 0 3px 0 rgba(255,255,255,0.7);
     }
     .box-base::before {
       content:''; position:absolute;
@@ -141,8 +124,6 @@
       width:100%; height:22px;
       background: rgba(255,255,255,0.3);
     }
-
-    /* LID */
     .box-lid {
       position: absolute; bottom:103px; left:-9px;
       width:190px; height:50px;
@@ -158,8 +139,6 @@
       width:22px; height:100%;
       background: rgba(255,255,255,0.5);
     }
-
-    /* BOW */
     .bow {
       position: absolute; bottom:148px; left:50%;
       transform: translateX(-50%);
@@ -183,38 +162,21 @@
       box-shadow: 0 0 16px rgba(233,30,140,0.55);
       z-index:1; position:relative;
     }
-
-    /* OPEN STATE */
-    .box-scene.opened .box-lid {
-      transform: rotateX(-155deg) translateY(-20px);
-      opacity: 0;
-    }
-    .box-scene.opened .bow {
-      transform: translateX(-50%) translateY(-60px) scale(0.05);
-      opacity: 0;
-    }
-
-    /* SPARKLES */
-    .sp {
-      position:absolute; opacity:0;
-      pointer-events:none; top:58px; left:78px;
-    }
+    .box-scene.opened .box-lid { transform: rotateX(-155deg) translateY(-20px); opacity: 0; }
+    .box-scene.opened .bow { transform: translateX(-50%) translateY(-60px) scale(0.05); opacity: 0; }
+    .sp { position:absolute; opacity:0; pointer-events:none; top:58px; left:78px; }
     .sp.pop { animation: spPop 0.9s ease-out forwards; }
     @keyframes spPop {
       0%   { opacity:1; transform:translate(0,0) scale(0); }
       35%  { opacity:1; transform:translate(var(--dx),var(--dy)) scale(1.6); }
       100% { opacity:0; transform:translate(calc(var(--dx)*2.5),calc(var(--dy)*2.5 - 30px)) scale(0.3); }
     }
-
-    /* HINT */
     .hint {
       font-size:0.8rem; letter-spacing:0.18em;
       color: var(--text-light); opacity:0.7;
       animation: pulse 2.2s ease-in-out infinite, riseIn 1.2s ease both 1.1s;
     }
     @keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:0.9} }
-
-    /* ─────────────── MODAL ─────────────── */
     .overlay {
       position:fixed; inset:0; z-index:100;
       background: rgba(252,228,236,0.65);
@@ -222,12 +184,10 @@
       display:flex; align-items:center; justify-content:center;
       opacity:0; pointer-events:none;
       transition: opacity 0.45s ease;
-      /* scroll trên mobile nếu modal cao hơn màn hình */
       overflow-y: auto;
       padding: 20px 0;
     }
     .overlay.show { opacity:1; pointer-events:all; }
-
     .modal {
       background: linear-gradient(160deg, #fff9fb 0%, #fff0f5 100%);
       border: 1.5px solid rgba(244,143,177,0.4);
@@ -242,12 +202,9 @@
       transform: scale(0.78) translateY(50px);
       transition: transform 0.52s cubic-bezier(0.34,1.56,0.64,1);
       position:relative; overflow:visible;
-      /* tránh bị cắt trên màn hình nhỏ */
       margin: auto;
     }
     .overlay.show .modal { transform: scale(1) translateY(0); }
-
-    /* top stripe */
     .modal::before {
       content:''; position:absolute;
       top:0; left:0; right:0; height:4px;
@@ -261,15 +218,12 @@
       filter:drop-shadow(0 4px 12px rgba(233,30,140,0.3));
       animation: riseIn 0.6s ease both 0.15s;
     }
-
     .modal-q {
       font-family: 'Great Vibes', cursive;
       font-size: clamp(1.65rem, 5vw, 2.35rem);
       color: var(--text);
       line-height:1.38; margin: 18px 0 34px;
     }
-
-    /* ── BUTTONS — desktop: 3 cột ── */
     .answers {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
@@ -277,9 +231,7 @@
       position: relative;
       min-height: 210px;
     }
-    .answers .ans.yes {
-      grid-column: 1 / -1;
-    }
+    .answers .ans.yes { grid-column: 1 / -1; }
     .ans {
       padding: 12px 10px;
       border-radius: 50px;
@@ -291,13 +243,11 @@
       letter-spacing: 0.02em;
       line-height: 1.4;
       transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
-      /* quan trọng: chặn highlight xanh khi chạm trên mobile */
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
     }
     .ans:hover { transform: scale(1.06) translateY(-2px); }
     .ans:active { transform: scale(0.96); }
-
     .ans.yes {
       background: linear-gradient(135deg, #ec407a 0%, #f48fb1 100%);
       color: #fff;
@@ -306,65 +256,33 @@
       box-shadow: 0 8px 26px rgba(233,30,140,0.35);
     }
     .ans.yes:hover { box-shadow: 0 14px 34px rgba(233,30,140,0.52); }
-
     .ans.soft {
       background: rgba(248,187,208,0.25);
       color: var(--text);
       border: 1.5px solid rgba(244,143,177,0.5);
     }
     .ans.soft:hover { background: rgba(248,187,208,0.5); }
-
     .ans.no {
       background: rgba(248,187,208,0.25);
       color: rgb(255, 0, 102);
       font-size: 0.78rem;
       font-weight: 400;
       border: 1.5px solid rgba(245, 107, 155, 0.35);
-      /* transition riêng cho chạy trốn */
       transition: left 0.26s ease, top 0.26s ease, background 0.3s, transform 0.3s;
     }
-
-    /* ── MOBILE: 2 cột, nút lớn hơn dễ bấm ── */
     @media (max-width: 480px) {
-      .modal {
-        padding: 44px 18px 36px;
-        border-radius: 22px;
-        width: 96%;
-      }
-      .modal-q {
-        font-size: clamp(1.3rem, 5.5vw, 1.8rem);
-        margin: 14px 0 24px;
-      }
-      .answers {
-        grid-template-columns: 1fr 1fr;
-        gap: 9px;
-        min-height: 260px;
-      }
-      /* trên mobile: nút yes vẫn full width */
-      .answers .ans.yes {
-        grid-column: 1 / -1;
-      }
-      .ans {
-        padding: 13px 8px;
-        font-size: 0.8rem;
-        /* ngón tay dễ bấm hơn */
-        min-height: 52px;
-      }
-      .ans.yes {
-        font-size: 0.9rem;
-        padding: 15px 16px;
-      }
+      .modal { padding: 44px 18px 36px; border-radius: 22px; width: 96%; }
+      .modal-q { font-size: clamp(1.3rem, 5.5vw, 1.8rem); margin: 14px 0 24px; }
+      .answers { grid-template-columns: 1fr 1fr; gap: 9px; min-height: 260px; }
+      .answers .ans.yes { grid-column: 1 / -1; }
+      .ans { padding: 13px 8px; font-size: 0.8rem; min-height: 52px; }
+      .ans.yes { font-size: 0.9rem; padding: 15px 16px; }
     }
-
-    /* RESULT */
     .result { display:none; flex-direction:column; align-items:center; gap:14px; }
     .result.show { display:flex; }
     .res-emoji { font-size:4rem; animation: bounceIn 0.7s cubic-bezier(0.34,1.56,0.64,1) both; }
     @keyframes bounceIn { from{transform:scale(0);opacity:0} to{transform:scale(1);opacity:1} }
-    .res-text {
-      font-family:'Great Vibes',cursive;
-      font-size:clamp(1.45rem,4vw,2.1rem); color:var(--text);
-    }
+    .res-text { font-family:'Great Vibes',cursive; font-size:clamp(1.45rem,4vw,2.1rem); color:var(--text); }
     .res-sub { font-size:0.88rem; color:var(--text-light); }
     .back-btn {
       margin-top:8px; padding:10px 28px;
@@ -376,8 +294,6 @@
       -webkit-tap-highlight-color: transparent;
     }
     .back-btn:hover { background:rgba(248,187,208,0.3); transform:scale(1.05); }
-
-    /* CONFETTI */
     .cf { position:fixed; border-radius:3px; opacity:0; z-index:200; animation:cfFall linear forwards; pointer-events:none; }
     @keyframes cfFall {
       0%   { opacity:1; transform:translateY(-10px) rotate(0deg); }
@@ -387,23 +303,17 @@
 </head>
 <body>
 
-<!-- BOKEH BACKGROUND -->
 <div class="bokeh b1"></div>
 <div class="bokeh b2"></div>
 <div class="bokeh b3"></div>
-
-<!-- FLOATING PETALS -->
 <div class="petals-bg" id="petalsBg"></div>
 
-<!-- MAIN CONTENT -->
 <div class="main">
   <div>
     <div class="eyebrow">14 · 02 · 2026</div>
     <h1 class="main-title">Chúc Mừng Ngày Valentine</h1>
     <p class="sub-title">Happy Valentine's Day &nbsp;🌸</p>
   </div>
-
-  <!-- GIFT BOX -->
   <div class="box-scene" id="boxScene" onclick="openBox()">
     <div class="bow">
       <div class="bow-l"></div>
@@ -420,101 +330,70 @@
     <div class="sp" id="s6" style="--dx:52px;--dy:-114px;font-size:1.1rem">🌸</div>
     <div class="sp" id="s7" style="--dx:2px;--dy:-132px;font-size:1.2rem">💕</div>
   </div>
-
   <p class="hint" id="hint">✦ &nbsp;Nhấn vào hộp quà để mở&nbsp; ✦</p>
 </div>
 
-<!-- MODAL OVERLAY -->
 <div class="overlay" id="overlay">
   <div class="modal" id="modal">
-
-    <!-- QUESTION SCREEN -->
     <div id="qScreen">
       <span class="modal-icon">🌸</span>
-
-      <div class="modal-q" id="qText">
-        Em muốn danh phận giữa hai ta là gì? 🌷
-      </div>
-
+      <div class="modal-q" id="qText">Em muốn danh phận giữa hai ta là gì? 🌷</div>
       <div class="answers" id="ansWrap">
-        <!-- Hàng 1: hero full-width -->
         <button class="ans yes"  onclick="pick('yes')">1.Chắc là iu 🌸</button>
-        <!-- Hàng 2: 3 nút ngang (2 trên mobile) -->
         <button class="ans soft" onclick="pick('sure')">2.Bạn bè 🫂</button>
         <button class="ans soft" onclick="pick('love')">3.Mập mờ 🍀</button>
         <button class="ans soft" onclick="pick('maybe')">4.Suy nghĩ thêm..💬</button>
-        <!-- Hàng 3 -->
         <button class="ans soft" onclick="pick('later')">5.Hỏi lại sau nhé 🌷</button>
         <button class="ans soft" onclick="pick('shy')">6.Lốp xe tăng 🛞</button>
-        <!-- Nút chạy trốn — ontouchstart cho mobile -->
         <button class="ans no" id="noBtn"
                 onmouseover="escapeBtn()"
                 ontouchstart="handleNoTouch(event)"
                 onclick="pick('no')">7.Không là gì 🙅‍♀️</button>
       </div>
     </div>
-
-    <!-- RESULT SCREEN -->
     <div class="result" id="rScreen">
       <div class="res-emoji" id="rEmoji"></div>
       <div class="res-text"  id="rText"></div>
       <div class="res-sub"   id="rSub"></div>
       <button class="back-btn" onclick="reset()">↩ &nbsp;Xem lại hộp quà</button>
     </div>
-
   </div>
 </div>
 
 <script>
 /* ═══════════════════════════════════════════════════════
-   🎨 CUSTOMIZATION ZONE — Chỉnh sửa tự do tại đây!
+   🎨 CUSTOMIZATION ZONE
    ═══════════════════════════════════════════════════════ */
 
 const QUESTION = "Em muốn danh phận giữa hai ta là gì? 🌷";
 
+// ← Thay bằng endpoint Formspree của bạn
+const FORMSPREE_URL = "https://formspree.io/f/xreaqpla";
+
+const LABELS = {
+  yes:   "1. Chắc là iu 🌸",
+  sure:  "2. Bạn bè 🫂",
+  love:  "3. Mập mờ 🍀",
+  maybe: "4. Suy nghĩ thêm 💬",
+  later: "5. Hỏi lại sau 🌷",
+  shy:   "6. Lốp xe tăng 🛞",
+  no:    "7. Không là gì 🙅‍♀️"
+};
+
 const RESULTS = {
-  yes:   {
-    emoji: "🎀💕🎀",
-    text:  "Anh hạnh phúc quá!",
-    sub:   "Chúc em ngày nào cũng xinh đẹp 🌸"
-  },
-  sure:  {
-    emoji: "😭🫂😭",
-    text:  "Anh biết ngay mà!😭",
-    sub:   "Chúc em Valentine thật vui 🌸"
-  },
-  love:  {
-    emoji: "🍀",
-    text:  "Daa anh biết rùi",
-    sub:   "Chúc em Valentine thật vui 🌸"
-  },
-  maybe: {
-    emoji: "🌷😊🌷",
-    text:  "Anh sẽ chờ câu trả lời nhé",
-    sub:   "Anh luôn ở đây dù em quyết định thế nào 💕"
-  },
-  later: {
-    emoji: "⏳🌸⏳",
-    text:  "Anh sẽ hỏi lại sau nhé~",
-    sub:   "Dù sao Valentine này cũng thật vui 🌷"
-  },
-  shy:   {
-    emoji: "🙈🙈",
-    text:  "vâng tôi chính là chiếc lốp xe tăng",
-    sub:   "Chúc em Valentine thật vui 🌸"
-  },
-  no:    {
-    emoji: "🥺💔",
-    text:  "Không sao, anh hiểu...",
-    sub:   "Chúc em Valentine thật vui 🌸"
-  }
+  yes:   { emoji: "🎀💕🎀", text: "Anh hạnh phúc quá!",              sub: "Chúc em ngày nào cũng xinh đẹp 🌸"              },
+  sure:  { emoji: "😭🫂😭", text: "Anh biết ngay mà!😭",             sub: "Chúc em Valentine thật vui 🌸"                  },
+  love:  { emoji: "🍀",     text: "Daa anh biết rùi",                 sub: "Chúc em Valentine thật vui 🌸"                  },
+  maybe: { emoji: "🌷😊🌷", text: "Anh sẽ chờ câu trả lời nhé",      sub: "Anh luôn ở đây dù em quyết định thế nào 💕"     },
+  later: { emoji: "⏳🌸⏳", text: "Anh sẽ hỏi lại sau nhé~",         sub: "Dù sao Valentine này cũng thật vui 🌷"          },
+  shy:   { emoji: "🙈🙈",   text: "vâng tôi chính là chiếc lốp xe tăng", sub: "Chúc em Valentine thật vui 🌸"             },
+  no:    { emoji: "🥺💔",   text: "Không sao, anh hiểu...",           sub: "Chúc em Valentine thật vui 🌸"                  }
 };
 
 /* ═══════════════════════════════════════════════════════ */
 
 let opened      = false;
 let escapeTimes = 0;
-let isTouching  = false; // tránh double-fire touch + click
 
 /* ── FLOATING PETALS ── */
 const pbg = document.getElementById('petalsBg');
@@ -534,7 +413,6 @@ PETALS.forEach(p => {
   }
 });
 
-/* ── SYNC QUESTION TEXT ── */
 document.getElementById('qText').textContent = QUESTION;
 
 /* ── OPEN BOX ── */
@@ -543,24 +421,43 @@ function openBox() {
   opened = true;
   document.getElementById('boxScene').classList.add('opened');
   document.getElementById('hint').style.display = 'none';
-
   ['s1','s2','s3','s4','s5','s6','s7'].forEach((id, i) => {
     const el = document.getElementById(id);
     el.style.animationDelay = (i * 0.07) + 's';
     el.classList.add('pop');
   });
-
   setTimeout(() => document.getElementById('overlay').classList.add('show'), 730);
 }
 
-/* ── NÚT CHẠY TRỐN ── */
-function escapeBtn() {
-  // desktop: hover
-  runAway();
+/* ── PICK ANSWER — duy nhất, có đủ confetti + Formspree ── */
+function pick(choice) {
+  const r = RESULTS[choice] || RESULTS.yes;
+
+  // Hiện màn hình kết quả
+  document.getElementById('qScreen').style.display = 'none';
+  const rs = document.getElementById('rScreen');
+  rs.classList.add('show');
+  document.getElementById('rEmoji').textContent = r.emoji;
+  document.getElementById('rText').textContent  = r.text;
+  document.getElementById('rSub').textContent   = r.sub;
+
+  // Confetti nếu chọn "iu"
+  if (choice === 'yes') launchConfetti();
+
+  // Gửi về Formspree
+  fetch(FORMSPREE_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      "Lựa chọn": LABELS[choice] || choice
+    })
+  });
 }
 
+/* ── NÚT CHẠY TRỐN ── */
+function escapeBtn() { runAway(); }
+
 function handleNoTouch(e) {
-  // mobile: touchstart — chặn click bắn sau đó
   e.preventDefault();
   runAway();
 }
@@ -568,33 +465,14 @@ function handleNoTouch(e) {
 function runAway() {
   escapeTimes++;
   if (escapeTimes > 10) { pick('no'); return; }
-
   const btn  = document.getElementById('noBtn');
   const wrap = document.getElementById('ansWrap');
-
-  // Đặt absolute lần đầu
   btn.style.position = 'absolute';
   btn.style.zIndex   = '5';
-
-  const bw   = btn.offsetWidth;
-  const bh   = btn.offsetHeight;
-  const maxX = Math.max(wrap.clientWidth  - bw - 8, 0);
-  const maxY = Math.max(wrap.clientHeight - bh - 8, 0);
-
+  const maxX = Math.max(wrap.clientWidth  - btn.offsetWidth  - 8, 0);
+  const maxY = Math.max(wrap.clientHeight - btn.offsetHeight - 8, 0);
   btn.style.left = (Math.random() * maxX) + 'px';
   btn.style.top  = (Math.random() * maxY) + 'px';
-}
-
-/* ── PICK ANSWER ── */
-function pick(choice) {
-  const r = RESULTS[choice] || RESULTS.yes;
-  document.getElementById('qScreen').style.display = 'none';
-  const rs = document.getElementById('rScreen');
-  rs.classList.add('show');
-  document.getElementById('rEmoji').textContent = r.emoji;
-  document.getElementById('rText').textContent  = r.text;
-  document.getElementById('rSub').textContent   = r.sub;
-  if (choice === 'yes') launchConfetti();
 }
 
 /* ── CONFETTI ── */
@@ -606,9 +484,8 @@ function launchConfetti() {
     const w = 5 + Math.random() * 9;
     const h = 9 + Math.random() * 15;
     c.style.cssText = `
-      left:${8 + Math.random() * 84}%;
-      top:-14px;
-      width:${w}px; height:${h}px;
+      left:${8 + Math.random() * 84}%;top:-14px;
+      width:${w}px;height:${h}px;
       border-radius:${Math.random() > 0.5 ? '50%' : '3px'};
       background:${cols[Math.floor(Math.random() * cols.length)]};
       animation-duration:${1.6 + Math.random() * 2.3}s;
@@ -625,11 +502,9 @@ function reset() {
   document.getElementById('overlay').classList.remove('show');
   document.getElementById('qScreen').style.display = '';
   document.getElementById('rScreen').classList.remove('show');
-
   const nb = document.getElementById('noBtn');
   nb.style.position = nb.style.left = nb.style.top = nb.style.zIndex = '';
   escapeTimes = 0;
-
   opened = false;
   document.getElementById('boxScene').classList.remove('opened');
   document.getElementById('hint').style.display = '';
