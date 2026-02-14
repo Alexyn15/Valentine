@@ -83,7 +83,7 @@
       letter-spacing: 0.45em; font-size: 0.7rem;
       color: var(--text-light); text-transform: uppercase;
       animation: riseIn 1s ease both 0.1s;
-        margin-bottom: 12px;
+      margin-bottom: 12px;
     }
     .main-title {
       font-family: 'Great Vibes', cursive;
@@ -129,13 +129,13 @@
         0 18px 44px var(--shadow),
         inset 0 3px 0 rgba(255,255,255,0.7);
     }
-    .box-base::before { /* v ribbon */
+    .box-base::before {
       content:''; position:absolute;
       left:50%; top:0; transform:translateX(-50%);
       width:22px; height:100%;
       background: linear-gradient(to right,rgba(255,255,255,0.65) 0%,rgba(255,255,255,0.3) 100%);
     }
-    .box-base::after { /* h ribbon */
+    .box-base::after {
       content:''; position:absolute;
       top:50%; left:0; transform:translateY(-50%);
       width:100%; height:22px;
@@ -222,6 +222,9 @@
       display:flex; align-items:center; justify-content:center;
       opacity:0; pointer-events:none;
       transition: opacity 0.45s ease;
+      /* scroll trên mobile nếu modal cao hơn màn hình */
+      overflow-y: auto;
+      padding: 20px 0;
     }
     .overlay.show { opacity:1; pointer-events:all; }
 
@@ -239,6 +242,8 @@
       transform: scale(0.78) translateY(50px);
       transition: transform 0.52s cubic-bezier(0.34,1.56,0.64,1);
       position:relative; overflow:visible;
+      /* tránh bị cắt trên màn hình nhỏ */
+      margin: auto;
     }
     .overlay.show .modal { transform: scale(1) translateY(0); }
 
@@ -249,7 +254,6 @@
       background: linear-gradient(90deg, #f8bbd0, #ec407a, #f8bbd0);
       border-radius: 28px 28px 0 0;
     }
-    /* floating icon above modal */
     .modal-icon {
       font-size:3rem; display:block;
       position:absolute; top:-28px; left:50%;
@@ -265,7 +269,7 @@
       line-height:1.38; margin: 18px 0 34px;
     }
 
-    /* BUTTONS — 3 col grid: row1 hero, row2-3 pairs */
+    /* ── BUTTONS — desktop: 3 cột ── */
     .answers {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
@@ -273,7 +277,6 @@
       position: relative;
       min-height: 210px;
     }
-    /* Nút hero chiếm toàn bộ hàng 1 */
     .answers .ans.yes {
       grid-column: 1 / -1;
     }
@@ -288,11 +291,13 @@
       letter-spacing: 0.02em;
       line-height: 1.4;
       transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      /* quan trọng: chặn highlight xanh khi chạm trên mobile */
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     .ans:hover { transform: scale(1.06) translateY(-2px); }
     .ans:active { transform: scale(0.96); }
 
-    /* YES — full-width hero button */
     .ans.yes {
       background: linear-gradient(135deg, #ec407a 0%, #f48fb1 100%);
       color: #fff;
@@ -302,7 +307,6 @@
     }
     .ans.yes:hover { box-shadow: 0 14px 34px rgba(233,30,140,0.52); }
 
-    /* SOFT options */
     .ans.soft {
       background: rgba(248,187,208,0.25);
       color: var(--text);
@@ -310,14 +314,46 @@
     }
     .ans.soft:hover { background: rgba(248,187,208,0.5); }
 
-    /* NO — runs away */
     .ans.no {
       background: rgba(248,187,208,0.25);
       color: rgb(255, 0, 102);
       font-size: 0.78rem;
       font-weight: 400;
       border: 1.5px solid rgba(245, 107, 155, 0.35);
-      transition: left 0.26s ease, top 0.26s ease, transform 0.3s;
+      /* transition riêng cho chạy trốn */
+      transition: left 0.26s ease, top 0.26s ease, background 0.3s, transform 0.3s;
+    }
+
+    /* ── MOBILE: 2 cột, nút lớn hơn dễ bấm ── */
+    @media (max-width: 480px) {
+      .modal {
+        padding: 44px 18px 36px;
+        border-radius: 22px;
+        width: 96%;
+      }
+      .modal-q {
+        font-size: clamp(1.3rem, 5.5vw, 1.8rem);
+        margin: 14px 0 24px;
+      }
+      .answers {
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+        min-height: 260px;
+      }
+      /* trên mobile: nút yes vẫn full width */
+      .answers .ans.yes {
+        grid-column: 1 / -1;
+      }
+      .ans {
+        padding: 13px 8px;
+        font-size: 0.8rem;
+        /* ngón tay dễ bấm hơn */
+        min-height: 52px;
+      }
+      .ans.yes {
+        font-size: 0.9rem;
+        padding: 15px 16px;
+      }
     }
 
     /* RESULT */
@@ -337,6 +373,7 @@
       font-family:'Quicksand',sans-serif; font-size:0.82rem;
       letter-spacing:0.1em; cursor:pointer;
       transition:all 0.3s;
+      -webkit-tap-highlight-color: transparent;
     }
     .back-btn:hover { background:rgba(248,187,208,0.3); transform:scale(1.05); }
 
@@ -362,7 +399,6 @@
 <div class="main">
   <div>
     <div class="eyebrow">14 · 02 · 2026</div>
-    
     <h1 class="main-title">Chúc Mừng Ngày Valentine</h1>
     <p class="sub-title">Happy Valentine's Day &nbsp;🌸</p>
   </div>
@@ -376,8 +412,6 @@
     </div>
     <div class="box-lid"></div>
     <div class="box-base"></div>
-
-    <!-- Sparkle nodes (positions set via CSS vars) -->
     <div class="sp" id="s1" style="--dx:-78px;--dy:-88px;font-size:1.1rem">🌸</div>
     <div class="sp" id="s2" style="--dx:78px;--dy:-92px;font-size:1.1rem">✨</div>
     <div class="sp" id="s3" style="--dx:-98px;--dy:-42px;font-size:1.0rem">💖</div>
@@ -398,34 +432,25 @@
     <div id="qScreen">
       <span class="modal-icon">🌸</span>
 
-      <!--
-      ╔═══════════════════════════════════════════════════════╗
-      ║  🎨 THAY ĐỔI CÂU HỎI BÍ MẬT Ở ĐÂY                  ║
-      ╚═══════════════════════════════════════════════════════╝
-      -->
       <div class="modal-q" id="qText">
-        Em có muốn là người yêu của anh không? 🌷
+        Em muốn danh phận giữa hai ta là gì? 🌷
       </div>
 
-      <!--
-      ╔═══════════════════════════════════════════════════════════╗
-      ║  🎨 THAY ĐỔI CÁC NÚT TRẢ LỜI Ở ĐÂY                     ║
-      ║  ans yes  → nút hero full-width hàng 1 (hồng đậm)        ║
-      ║  ans soft → nút phụ xếp 3 cột hàng 2-3 (hồng pastel)     ║
-      ║  ans no   → nút chạy trốn khi hover 😂                   ║
-      ╚═══════════════════════════════════════════════════════════╝
-      -->
       <div class="answers" id="ansWrap">
         <!-- Hàng 1: hero full-width -->
-        <button class="ans yes"  onclick="pick('yes')"> Yêu 🌸</button>
-        <!-- Hàng 2: 3 nút ngang -->
+        <button class="ans yes"  onclick="pick('yes')">Yêu 🌸</button>
+        <!-- Hàng 2: 3 nút ngang (2 trên mobile) -->
         <button class="ans soft" onclick="pick('sure')">Bạn bè 🫂</button>
         <button class="ans soft" onclick="pick('love')">Mập mờ 🍀</button>
-        <button class="ans soft" onclick="pick('maybe')">Suy nghĩ thêm...💬</button>
-        <!-- Hàng 3: 3 nút ngang (nút cuối chạy trốn) -->
+        <button class="ans soft" onclick="pick('maybe')">Suy nghĩ thêm... 💬</button>
+        <!-- Hàng 3 -->
         <button class="ans soft" onclick="pick('later')">Hỏi lại sau nhé 🌷</button>
         <button class="ans soft" onclick="pick('shy')">Lốp xe tăng 🛞</button>
-        <button class="ans no" id="noBtn" onmouseover="escape()" onclick="pick('no')">Không là gì 🙅‍♀️</button>
+        <!-- Nút chạy trốn — ontouchstart cho mobile -->
+        <button class="ans no" id="noBtn"
+                onmouseover="escapeBtn()"
+                ontouchstart="handleNoTouch(event)"
+                onclick="pick('no')">Không là gì 🙅‍♀️</button>
       </div>
     </div>
 
@@ -445,10 +470,8 @@
    🎨 CUSTOMIZATION ZONE — Chỉnh sửa tự do tại đây!
    ═══════════════════════════════════════════════════════ */
 
-// Câu hỏi (cũng có thể sửa trực tiếp trong HTML bên trên)
 const QUESTION = "Em muốn danh phận giữa hai ta là gì? 🌷";
 
-// Kết quả hiện ra sau khi chọn
 const RESULTS = {
   yes:   {
     emoji: "🎀💕🎀",
@@ -489,8 +512,9 @@ const RESULTS = {
 
 /* ═══════════════════════════════════════════════════════ */
 
-let opened = false;
+let opened      = false;
 let escapeTimes = 0;
+let isTouching  = false; // tránh double-fire touch + click
 
 /* ── FLOATING PETALS ── */
 const pbg = document.getElementById('petalsBg');
@@ -520,7 +544,6 @@ function openBox() {
   document.getElementById('boxScene').classList.add('opened');
   document.getElementById('hint').style.display = 'none';
 
-  // Staggered sparkle burst
   ['s1','s2','s3','s4','s5','s6','s7'].forEach((id, i) => {
     const el = document.getElementById(id);
     el.style.animationDelay = (i * 0.07) + 's';
@@ -528,6 +551,38 @@ function openBox() {
   });
 
   setTimeout(() => document.getElementById('overlay').classList.add('show'), 730);
+}
+
+/* ── NÚT CHẠY TRỐN ── */
+function escapeBtn() {
+  // desktop: hover
+  runAway();
+}
+
+function handleNoTouch(e) {
+  // mobile: touchstart — chặn click bắn sau đó
+  e.preventDefault();
+  runAway();
+}
+
+function runAway() {
+  escapeTimes++;
+  if (escapeTimes > 10) { pick('no'); return; }
+
+  const btn  = document.getElementById('noBtn');
+  const wrap = document.getElementById('ansWrap');
+
+  // Đặt absolute lần đầu
+  btn.style.position = 'absolute';
+  btn.style.zIndex   = '5';
+
+  const bw   = btn.offsetWidth;
+  const bh   = btn.offsetHeight;
+  const maxX = Math.max(wrap.clientWidth  - bw - 8, 0);
+  const maxY = Math.max(wrap.clientHeight - bh - 8, 0);
+
+  btn.style.left = (Math.random() * maxX) + 'px';
+  btn.style.top  = (Math.random() * maxY) + 'px';
 }
 
 /* ── PICK ANSWER ── */
@@ -542,31 +597,14 @@ function pick(choice) {
   if (choice === 'yes') launchConfetti();
 }
 
-/* ── NO BUTTON ESCAPES ── */
-function escape() {
-  escapeTimes++;
-  // After 6 escapes: surrender and pick yes 😂
-  if (escapeTimes > 10) { pick('no'); return; }
-
-  const btn    = document.getElementById('noBtn');
-  const wrap   = document.getElementById('ansWrap');
-  const maxX   = wrap.clientWidth  - btn.offsetWidth  - 10;
-  const maxY   = wrap.clientHeight - btn.offsetHeight - 10;
-
-  btn.style.position = 'absolute';
-  btn.style.zIndex   = '5';
-  btn.style.left = (Math.random() * Math.max(maxX, 10)) + 'px';
-  btn.style.top  = (Math.random() * Math.max(maxY, 10)) + 'px';
-}
-
-/* ── CONFETTI BURST ── */
+/* ── CONFETTI ── */
 function launchConfetti() {
   const cols = ['#f8bbd0','#f48fb1','#ec407a','#fce4ec','#ffffff','#fde8f0','#fadadd'];
   for (let i = 0; i < 95; i++) {
-    const c  = document.createElement('div');
+    const c = document.createElement('div');
     c.className = 'cf';
-    const w  = 5 + Math.random() * 9;
-    const h  = 9 + Math.random() * 15;
+    const w = 5 + Math.random() * 9;
+    const h = 9 + Math.random() * 15;
     c.style.cssText = `
       left:${8 + Math.random() * 84}%;
       top:-14px;
@@ -588,12 +626,10 @@ function reset() {
   document.getElementById('qScreen').style.display = '';
   document.getElementById('rScreen').classList.remove('show');
 
-  // Reset no button
   const nb = document.getElementById('noBtn');
   nb.style.position = nb.style.left = nb.style.top = nb.style.zIndex = '';
   escapeTimes = 0;
 
-  // Reset box
   opened = false;
   document.getElementById('boxScene').classList.remove('opened');
   document.getElementById('hint').style.display = '';
